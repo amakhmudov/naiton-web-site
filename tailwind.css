@@ -70,19 +70,23 @@
   }
 
   h2, .h2{
-    @apply text-4xl text-accent text-center;
+    @apply text-2xl lg:text-4xl text-accent text-center;
   }
 
   h3, .h3{
-    @apply text-2xl text-body font-bold;
+    @apply text-xl lg:text-2xl text-body font-bold;
+  }
+
+  [data-state="active"]{
+    @apply text-accent font-medium;
   }
 
   .text-lead{
-    @apply text-xl text-body;
+    @apply text-lg lg:text-xl text-body;
   }
 
   .list-disc{
-    @apply ml-4;
+    @apply ml-4 md-down:!list-none;
   }
 
   .list-hyphen li{

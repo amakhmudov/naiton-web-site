@@ -4,7 +4,7 @@
   "description": "web site for naiton",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tailwindcss -i ./tailwind.css -o ./src/css/main.css --watch",
+    "dev": "npx tailwindcss -i ./tailwind.css -o ./src/assets/css/main.css --watch",
     "start": "eleventy --serve",
     "build": "eleventy",
     "dev-all": "npm-run-all --parallel dev start"
