@@ -70,8 +70,20 @@
     @apply flex flex-col min-h-full;
   }
 
+  .menu-link {
+    @apply hover:text-accent hover:underline;
+  }
+
+  .menu-link.active {
+    @apply text-accent font-semibold;
+  }
+
   .main {
     @apply grow;
+  }
+
+  .nbswo-bg {
+    background-image: url(./assets/img/nbswo-gr.svg);
   }
 
   .footer {

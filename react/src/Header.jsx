@@ -1,8 +1,9 @@
 import clsx from "clsx";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 
 export default function Header({ phoneNumber }) {
-  const currentPath = window.location.pathname;
+  const { pathname } = useLocation();
 
   const menuItems = [
     { label: "About", href: "/about/" },
@@ -22,9 +23,9 @@ export default function Header({ phoneNumber }) {
             <ul className="flex items-center space-x-2 md:space-x-12">
               {menuItems.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className={clsx(item.href === currentPath ? "text-accent font-semibold" : "hover:text-accent hover:underline")}>
+                  <Link to={item.href} className={clsx("menu-link", item.href === pathname && "active")}>
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
