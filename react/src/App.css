@@ -104,6 +104,10 @@
     @apply text-xl lg:text-2xl text-body font-bold;
   }
 
+  hr {
+    @apply border-body/10;
+  }
+
   [data-state="active"] {
     @apply text-accent font-medium;
   }
@@ -130,6 +134,12 @@
 
   .breadcrumbs a {
     @apply text-white/50 hover:text-white transition after:content-['/'] after:px-2;
+  }
+}
+
+@layer utilities {
+  .container {
+    @apply mx-auto max-w-[1440px] px-4;
   }
 }
 
