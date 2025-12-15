@@ -1,9 +1,12 @@
+import { useState } from "react";
+import clsx from "clsx";
 import { useOutletContext } from "react-router-dom";
 import CTASection from "../components/CTASection.jsx";
 import SolutionSection from "../components/SolutionSection.jsx";
 
 export default function Solutions() {
   const { phoneNumber } = useOutletContext();
+  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   const sections = [
     {
@@ -234,7 +237,7 @@ export default function Solutions() {
             <p className="text-lead text-white">To give an impression of what is possible</p>
           </div>
 
-          <div className="relative md-down:px-8 text-white max-w-xl mx-auto space-y-3 overflow-hidden max-h-80">
+          <div className={clsx("relative md-down:px-8 text-white max-w-xl mx-auto space-y-3 overflow-hidden transition-all duration-1000", toggleDropdown || "max-h-80")}>
             <p>A funeral director orders a coffin via your website;</p>
 
             <ul className="list-hyphen space-y-3">
@@ -259,8 +262,8 @@ export default function Solutions() {
             <p>In the meantime, all changes in all relevant modules are of course monitored and processed by the system. So, from ordering, through purchasing, inventory management, production, transport, up to and including invoice and financial processing such as forecasting and actual costing.</p>
 
             <div className="absolute left-0 bottom-0 w-full pt-12 bg-gradient-to-b via-accent from-transparent to-accent">
-              <button className="flex items-center space-x-2 text-xl mx-auto">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 13" width="22" height="13" fill="none">
+              <button onClick={() => setToggleDropdown(!toggleDropdown)} className="flex items-center space-x-2 text-xl mx-auto cursor-pointer">
+                <svg className={toggleDropdown ? "rotate-180" : ""} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 13" width="22" height="13" fill="none">
                   <path fill="currentColor" d="M20.743.99a.75.75 0 0 0-.523.23L11 10.44 1.78 1.22A.75.75 0 1 0 .72 2.28l9.75 9.75a.75.75 0 0 0 1.06 0l9.75-9.75a.75.75 0 0 0-.537-1.29Z" />
                 </svg>
               </button>
