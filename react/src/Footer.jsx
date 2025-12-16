@@ -26,7 +26,7 @@ export default function Footer({ phoneNumber }) {
             </li>
 
             <li>
-              <a href="mailto:" className="flex items-center lg:space-x-2 text-lg max-lg:flex-col max-lg:space-y-2">
+              <span className="flex items-center lg:space-x-2 text-lg max-lg:flex-col max-lg:space-y-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 18" width="16" height="18" fill="none" className="w-5 h-5 text-accent/70">
                   <path
                     fill="currentColor"
@@ -34,7 +34,7 @@ export default function Footer({ phoneNumber }) {
                   />
                 </svg>
                 <span>Kurt Callostraat 19 / 3067 CZ, Rotterdam</span>
-              </a>
+              </span>
             </li>
           </ul>
         </div>
