@@ -1,0 +1,36 @@
+---
+  import "../styles/global.css";
+interface Props {
+  title: string;
+  description?: string;
+  phone?: string;
+}
+const { title ="Naiton Business Suite - Explore Naiton", description="Naiton - online and offline sales with your internal business processes. We work on an ongoing process, based on your specific situation", phone="310208932732" } = Astro.props;
+
+const pathname = Astro.url.pathname;
+
+import Footer from "../components/Footer.jsx";
+import Header from "../components/Header.jsx";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div id="container">
+      <Header phone={phone} pathname={pathname} client:load />
+
+      <main class="main">
+        <slot />
+      </main>
+
+      <Footer phone={phone} client:load />
+    </div>
+  </body>
+</html>

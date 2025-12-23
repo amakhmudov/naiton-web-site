@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Home from '../components/Home.jsx';
+const phone = "310208932732";
+---
+
+<Layout>
+  <Home phone={phone} client:load />
+</Layout>
