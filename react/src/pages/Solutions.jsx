@@ -1,8 +1,8 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { useOutletContext } from "react-router-dom";
-import CTASection from "../components/CTASection.jsx";
-import SolutionSection from "../components/SolutionSection.jsx";
+import CTASection from "@/components/CTASection.jsx";
+import SolutionSection from "@/components/SolutionSection.jsx";
 
 export default function Solutions() {
   const { phoneNumber } = useOutletContext();

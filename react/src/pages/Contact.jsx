@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router-dom";
-import CTASection from "../components/CTASection.jsx";
+import CTASection from "@/components/CTASection.jsx";
 
 export default function Contact() {
   const { phoneNumber } = useOutletContext();

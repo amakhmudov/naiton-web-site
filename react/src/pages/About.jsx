@@ -1,12 +1,12 @@
 import { useOutletContext } from "react-router-dom";
-import ContentSection from "../components/ContentSection.jsx";
-import CTASection from "../components/CTASection.jsx";
-import niafferp from "../assets/img/niafferp.png";
-import niafferrpWebp from "../assets/img/niafferp.webp";
-import naitonOopbp from "../assets/img/naiton-oopbp.png";
-import naitonOopbpWebp from "../assets/img/naiton-oopbp.webp";
-import odmwacpac from "../assets/img/odmwacpac.png";
-import odmwacpacWebp from "../assets/img/odmwacpac.webp";
+import ContentSection from "@/components/ContentSection.jsx";
+import CTASection from "@/components/CTASection.jsx";
+import niafferp from "@/assets/img/niafferp.png";
+import niafferrpWebp from "@/assets/img/niafferp.webp";
+import naitonOopbp from "@/assets/img/naiton-oopbp.png";
+import naitonOopbpWebp from "@/assets/img/naiton-oopbp.webp";
+import odmwacpac from "@/assets/img/odmwacpac.png";
+import odmwacpacWebp from "@/assets/img/odmwacpac.webp";
 
 export default function About() {
   const { phoneNumber } = useOutletContext();
