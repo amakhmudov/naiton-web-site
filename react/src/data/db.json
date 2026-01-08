@@ -1,7 +1,0 @@
-{
-  "menuItems": [
-    { "id": 1, "label": "About", "href": "/about/" },
-    { "id": 2, "label": "Solutions", "href": "/solutions/" },
-    { "id": 3, "label": "Contact", "href": "/contact/" }
-  ]
-}

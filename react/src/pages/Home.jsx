@@ -1,6 +1,9 @@
-import { useOutletContext } from "react-router-dom";
+import { Suspense } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link } from "react-router";
 import CTASection from "@/components/CTASection.jsx";
 import ProjectsSwiper from "@/components/ProjectsSwiper.jsx";
+import Loader from "@/components/Loader.jsx";
 // Clients images
 import clientGpsBuddy from "@/assets/img/clients/gps-buddy.svg";
 import clientKitemana from "@/assets/img/clients/kitemana.svg";
@@ -40,77 +43,65 @@ import ChevronRight from "@/assets/img/icons/chevron-right.svg?react";
 import naitonOopbp from "@/assets/img/naiton-oopbp.webp";
 import naitonOopbpJpg from "@/assets/img/naiton-oopbp.png";
 
-export default function Home() {
-  const { phoneNumber } = useOutletContext();
+const projectImages = {
+  "gps-buddy": {
+    webp: gpsBuddyWebp,
+    webp2x: gpsBuddyWebp2x,
+    mobileWebp: gpsBuddyMobileWebp,
+    mobileWebp2x: gpsBuddyMobileWebp2x,
+    jpg: gpsBuddy,
+    jpg2x: gpsBuddy2x,
+    mobileJpg: gpsBuddyMobile,
+    mobileJpg2x: gpsBuddyMobile2x,
+  },
+  kitemana: {
+    webp: kitemanaWebp,
+    webp2x: kitemanaWebp2x,
+    mobileWebp: kitemanaMobileWebp,
+    mobileWebp2x: kitemanaMobileWebp2x,
+    jpg: kitemana,
+    jpg2x: kitemana2x,
+    mobileJpg: kitemanaMobile,
+    mobileJpg2x: kitemanaMobile2x,
+  },
+  "van-dijk": {
+    webp: vanDijkWebp,
+    webp2x: vanDijkWebp2x,
+    mobileWebp: vanDijkMobileWebp,
+    mobileWebp2x: vanDijkMobileWebp2x,
+    jpg: vanDijk,
+    jpg2x: vanDijk2x,
+    mobileJpg: vanDijkMobile,
+    mobileJpg2x: vanDijkMobile2x,
+  },
+};
 
-  const projects = [
-    {
-      id: "gps-buddy",
-      title: "GPS Buddy",
-      webp: gpsBuddyWebp,
-      webp2x: gpsBuddyWebp2x,
-      mobileWebp: gpsBuddyMobileWebp,
-      mobileWebp2x: gpsBuddyMobileWebp2x,
-      jpg: gpsBuddy,
-      jpg2x: gpsBuddy2x,
-      mobileJpg: gpsBuddyMobile,
-      mobileJpg2x: gpsBuddyMobile2x,
-      alt: "GPS Buddy",
-    },
-    {
-      id: "kitemana",
-      title: "Kitemana",
-      webp: kitemanaWebp,
-      webp2x: kitemanaWebp2x,
-      mobileWebp: kitemanaMobileWebp,
-      mobileWebp2x: kitemanaMobileWebp2x,
-      jpg: kitemana,
-      jpg2x: kitemana2x,
-      mobileJpg: kitemanaMobile,
-      mobileJpg2x: kitemanaMobile2x,
-      alt: "Kitemana",
-    },
-    {
-      id: "van-dijk",
-      title: "Van Dijk Staircase Solutions",
-      webp: vanDijkWebp,
-      webp2x: vanDijkWebp2x,
-      mobileWebp: vanDijkMobileWebp,
-      mobileWebp2x: vanDijkMobileWebp2x,
-      jpg: vanDijk,
-      jpg2x: vanDijk2x,
-      mobileJpg: vanDijkMobile,
-      mobileJpg2x: vanDijkMobile2x,
-      alt: "Van Dijk Staircase Solutions",
-    },
-  ];
+const clientImages = {
+  "gps-buddy": clientGpsBuddy,
+  kitemana: clientKitemana,
+  vandijk: clientVandijk,
+  energielive: clientEnergielive,
+};
 
-  const clients = [
-    {
-      id: "gps-buddy",
-      name: "gps buddy",
-      link: "https://www.gps-buddy.com",
-      img: clientGpsBuddy,
-    },
-    {
-      id: "kitemana",
-      name: "kitemana",
-      link: "https://www.kitemana.com",
-      img: clientKitemana,
-    },
-    {
-      id: "vandijk",
-      name: "vanDijk",
-      link: "https://vandijk-staircasesolutions.com",
-      img: clientVandijk,
-    },
-    {
-      id: "energielive",
-      name: "energielive",
-      link: "https://energielive.nl",
-      img: clientEnergielive,
-    },
-  ];
+function HomeContent() {
+  const { data } = useSuspenseQuery({
+    queryKey: ["homeData"],
+    queryFn: () =>
+      fetch("/data/db.json")
+        .then((response) => response.json())
+        .then((data) => ({
+          projects: data.projects.map((project) => ({
+            ...project,
+            ...projectImages[project.id],
+          })),
+          clients: data.clients.map((client) => ({
+            ...client,
+            img: clientImages[client.id],
+          })),
+        })),
+  });
+
+  const { projects, clients } = data;
 
   return (
     <>
@@ -162,12 +153,12 @@ export default function Home() {
         </picture>
 
         <p className="text-center">
-          <a href="/solutions/" className="btn text-white bg-accent">
+          <Link to="/solutions/" className="btn text-white bg-accent">
             View Naiton solutions
-          </a>
+          </Link>
         </p>
 
-        <CTASection phoneNumber={phoneNumber} title="Would you like to get acquainted with Nation Business Suite without obligation?" />
+        <CTASection title="Would you like to get acquainted with Nation Business Suite without obligation?" />
 
         <div className="flex max-md:flex-wrap max-md:space-y-6">
           <div className="w-full md:w-3/12">
@@ -200,5 +191,13 @@ export default function Home() {
         </div>
       </section>
     </>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <HomeContent />
+    </Suspense>
   );
 }
