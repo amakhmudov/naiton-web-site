@@ -21,6 +21,8 @@ export default function ProjectsSwiper({ children }) {
         mousewheel: true,
         slidesPerView: 1,
         keyboard: true,
+        preloadImages: false, // Don't preload all images
+        watchSlidesProgress: true, // Watch slide progress for better lazy loading
         navigation: {
           nextEl: ".projects-navigation__next",
           prevEl: ".projects-navigation__prev",

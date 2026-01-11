@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import ContentSection from "@/components/ContentSection.jsx";
 import CTASection from "@/components/CTASection.jsx";
 import Loader from "@/components/Loader.jsx";
+import LazySection from "@/components/LazySection.jsx";
 import niafferp from "@/assets/img/niafferp.png";
 import niafferrpWebp from "@/assets/img/niafferp.webp";
 import naitonOopbp from "@/assets/img/naiton-oopbp.png";
@@ -66,19 +67,25 @@ function AboutContent() {
 
       <section className="container py-12 md-down:text-center">
         {sections.map((section, index) => (
-          <ContentSection key={section.id} {...section} />
+          <LazySection>
+            <ContentSection key={section.id} {...section} />
+          </LazySection>
         ))}
 
-        <div className="flex lg-down:flex-wrap md:gap-x-6 lg-down:space-y-6">
-          <div className="w-full lg:w-3/12"></div>
-          <div className="w-full space-y-12 lg:w-9/12">
-            <p>Naiton's software is now used by hundreds of customers, with thousands of users. No costs are charged for the software modules and no (monthly) license fees are charged. How is that possible? Ask us!</p>
+        <LazySection>
+          <div className="flex lg-down:flex-wrap md:gap-x-6 lg-down:space-y-6">
+            <div className="w-full lg:w-3/12"></div>
+            <div className="w-full space-y-12 lg:w-9/12">
+              <p>Naiton's software is now used by hundreds of customers, with thousands of users. No costs are charged for the software modules and no (monthly) license fees are charged. How is that possible? Ask us!</p>
+            </div>
           </div>
-        </div>
+        </LazySection>
 
         <hr className="mt-12 border-t" />
 
-        <CTASection title="Would you like to get acquainted with Nation Business Suite without obligation?" />
+        <LazySection>
+          <CTASection title="Would you like to get acquainted with Nation Business Suite without obligation?" />
+        </LazySection>
       </section>
     </>
   );

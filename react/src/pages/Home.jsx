@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import CTASection from "@/components/CTASection.jsx";
 import ProjectsSwiper from "@/components/ProjectsSwiper.jsx";
 import Loader from "@/components/Loader.jsx";
+import LazySection from "@/components/LazySection.jsx";
 // Clients images
 import clientGpsBuddy from "@/assets/img/clients/gps-buddy.svg";
 import clientKitemana from "@/assets/img/clients/kitemana.svg";
@@ -108,14 +109,14 @@ function HomeContent() {
       <section className="container">
         <div className="relative">
           <ProjectsSwiper>
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <picture key={project.id} className="swiper-slide">
                 <source media="(min-width: 562px)" srcSet={`${project.webp} 1x, ${project.webp2x} 2x`} type="image/webp" />
                 <source media="(max-width: 560px)" srcSet={`${project.mobileWebp} 1x, ${project.mobileWebp2x} 2x`} type="image/webp" />
                 <source media="(min-width: 562px)" srcSet={`${project.jpg} 1x, ${project.jpg2x} 2x`} />
                 <source media="(max-width: 560px)" srcSet={`${project.mobileJpg} 1x, ${project.mobileJpg2x} 2x`} />
 
-                <img src={project.jpg} srcSet={`${project.jpg} 1x, ${project.jpg2x} 2x`} alt={project.alt} width="1440" height="600" className="w-full object-cover" />
+                <img src={project.jpg} srcSet={`${project.jpg} 1x, ${project.jpg2x} 2x`} alt={project.alt} width="1440" height="600" className="w-full object-cover" loading={index <= 1 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : index === 1 ? "low" : undefined} decoding={index === 0 ? "sync" : "async"} />
               </picture>
             ))}
           </ProjectsSwiper>
@@ -147,10 +148,12 @@ function HomeContent() {
           </div>
         </div>
 
-        <picture className="block">
-          <source srcSet={`${naitonOopbp} 1x, ${naitonOopbp} 2x`} type="image/webp" />
-          <img src={naitonOopbpJpg} width="1074" height="512" alt="naiton - optimization of operational business processes" className="w-full max-w-[80%] mx-auto object-cover" />
-        </picture>
+        <LazySection>
+          <picture className="block">
+            <source srcSet={`${naitonOopbp} 1x, ${naitonOopbp} 2x`} type="image/webp" />
+            <img src={naitonOopbpJpg} width="1074" height="512" alt="naiton - optimization of operational business processes" className="w-full max-w-[80%] mx-auto object-cover" loading="lazy" decoding="async" />
+          </picture>
+        </LazySection>
 
         <p className="text-center">
           <Link to="/solutions/" className="btn text-white bg-accent">
@@ -158,37 +161,43 @@ function HomeContent() {
           </Link>
         </p>
 
-        <CTASection title="Would you like to get acquainted with Nation Business Suite without obligation?" />
+        <LazySection>
+          <CTASection title="Would you like to get acquainted with Nation Business Suite without obligation?" />
+        </LazySection>
 
-        <div className="flex max-md:flex-wrap max-md:space-y-6">
-          <div className="w-full md:w-3/12">
-            <h3>Our Clients</h3>
-          </div>
+        <LazySection>
+          <div className="flex max-md:flex-wrap max-md:space-y-6">
+            <div className="w-full md:w-3/12">
+              <h3>Our Clients</h3>
+            </div>
 
-          <div className="w-full md:w-9/12">
-            <ul className="grid grid-cols-4 max-md:grid-cols-2 gap-6">
-              {clients.map((client) => (
-                <li key={client.id}>
-                  <a href={client.link} target="_blank" rel="noopener noreferrer" className="flex w-full h-full px-4 py-10 rounded bg-body/5 items-center justify-center hover:shadow-2xl duration-500 transition">
-                    <img src={client.img} width="156" height="38" alt={client.name} />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="w-full md:w-9/12">
+              <ul className="grid grid-cols-4 max-md:grid-cols-2 gap-6">
+                {clients.map((client) => (
+                  <li key={client.id}>
+                    <a href={client.link} target="_blank" rel="noopener noreferrer" className="flex w-full h-full px-4 py-10 rounded bg-body/5 items-center justify-center hover:shadow-2xl duration-500 transition">
+                      <img src={client.img} width="156" height="38" alt={client.name} loading="lazy" decoding="async" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        </LazySection>
 
         <hr className="border-t" />
 
-        <div className="flex max-md:flex-wrap max-md:space-y-6">
-          <div className="w-full md:w-3/12">
-            <h3>Interesting fact</h3>
-          </div>
+        <LazySection>
+          <div className="flex max-md:flex-wrap max-md:space-y-6">
+            <div className="w-full md:w-3/12">
+              <h3>Interesting fact</h3>
+            </div>
 
-          <div className="w-full md:w-9/12">
-            <p>Managed from the Netherlands, with more than 30 permanent (international) developers, English, German and Dutch-language support and maintenance. Internationally oriented solutions; the package is multi-language, multi-currency, multi-business (intercompany and intracompany)… but also international VAT payments, for example, are available on request.</p>
+            <div className="w-full md:w-9/12">
+              <p>Managed from the Netherlands, with more than 30 permanent (international) developers, English, German and Dutch-language support and maintenance. Internationally oriented solutions; the package is multi-language, multi-currency, multi-business (intercompany and intracompany)… but also international VAT payments, for example, are available on request.</p>
+            </div>
           </div>
-        </div>
+        </LazySection>
       </section>
     </>
   );
