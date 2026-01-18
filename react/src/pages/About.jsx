@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import ContentSection from "@/components/ContentSection.jsx";
 import CTASection from "@/components/CTASection.jsx";
+import Error from "@/components/Error.jsx";
 import Loader from "@/components/Loader.jsx";
 import LazySection from "@/components/LazySection.jsx";
 import niafferp from "@/assets/img/niafferp.png";
@@ -34,19 +34,49 @@ const sectionImages = {
   },
 };
 
-function AboutContent() {
-  const { data: sections } = useSuspenseQuery({
-    queryKey: ["aboutData"],
-    queryFn: () =>
-      fetch("/data/db.json")
-        .then((response) => response.json())
-        .then((data) =>
-          data.aboutSections.map((section) => ({
-            ...section,
-            image: sectionImages[section.id],
-          })),
-        ),
-  });
+export default function About() {
+  const [sections, setSections] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/data/db.json", { signal: controller.signal });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        const sectionsWithImages = jsonData.aboutSections.map((section) => ({
+          ...section,
+          image: sectionImages[section.id],
+        }));
+        setSections(sectionsWithImages);
+        setError(null);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err);
+          setSections(null);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => controller.abort();
+  }, []);
+
+  if (isLoading || !sections) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
+  }
 
   return (
     <>
@@ -66,9 +96,9 @@ function AboutContent() {
       </div>
 
       <section className="container py-12 md-down:text-center">
-        {sections.map((section, index) => (
-          <LazySection>
-            <ContentSection key={section.id} {...section} />
+        {sections.map((section) => (
+          <LazySection key={section.id}>
+            <ContentSection {...section} />
           </LazySection>
         ))}
 
@@ -88,13 +118,5 @@ function AboutContent() {
         </LazySection>
       </section>
     </>
-  );
-}
-
-export default function About() {
-  return (
-    <Suspense fallback={<Loader />}>
-      <AboutContent />
-    </Suspense>
   );
 }

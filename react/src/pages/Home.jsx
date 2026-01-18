@@ -1,7 +1,7 @@
-import { Suspense } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import CTASection from "@/components/CTASection.jsx";
+import Error from "@/components/Error.jsx";
 import ProjectsSwiper from "@/components/ProjectsSwiper.jsx";
 import Loader from "@/components/Loader.jsx";
 import LazySection from "@/components/LazySection.jsx";
@@ -84,23 +84,54 @@ const clientImages = {
   energielive: clientEnergielive,
 };
 
-function HomeContent() {
-  const { data } = useSuspenseQuery({
-    queryKey: ["homeData"],
-    queryFn: () =>
-      fetch("/data/db.json")
-        .then((response) => response.json())
-        .then((data) => ({
-          projects: data.projects.map((project) => ({
+export default function Home() {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/data/db.json", { signal: controller.signal });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        setData({
+          projects: jsonData.projects.map((project) => ({
             ...project,
             ...projectImages[project.id],
           })),
-          clients: data.clients.map((client) => ({
+          clients: jsonData.clients.map((client) => ({
             ...client,
             img: clientImages[client.id],
           })),
-        })),
-  });
+        });
+        setError(null);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err);
+          setData(null);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => controller.abort();
+  }, []);
+
+  if (isLoading || !data) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
+  }
 
   const { projects, clients } = data;
 
@@ -200,13 +231,5 @@ function HomeContent() {
         </LazySection>
       </section>
     </>
-  );
-}
-
-export default function Home() {
-  return (
-    <Suspense fallback={<Loader />}>
-      <HomeContent />
-    </Suspense>
   );
 }
