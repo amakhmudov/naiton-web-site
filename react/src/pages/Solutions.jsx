@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import CTASection from "@/components/CTASection.jsx";
 import SolutionSection from "@/components/SolutionSection.jsx";
 import SuccessCaseSection from "@/components/SuccessCaseSection.jsx";
+import LazySection from "@/components/LazySection.jsx";
 
 const sections = [
   {
@@ -44,25 +45,33 @@ export default function Solutions() {
         </div>
       </div>
 
-      <section className="container pt-12 pb-6 md-down:text-center">
-        {sections.slice(0, 2).map((section, index) => (
-          <SolutionSection key={index} {...section} showDivider={index < sections.slice(2).length - 1} />
-        ))}
-      </section>
+      <LazySection>
+        <section className="container pt-12 pb-6 md-down:text-center">
+          {sections.slice(0, 2).map((section, index) => (
+            <SolutionSection key={index} {...section} showDivider={index < sections.slice(2).length - 1} />
+          ))}
+        </section>
+      </LazySection>
 
-      <section className="container relative before:content-[''] before:absolute before:w-[calc(100%-2rem)] before:h-full before:top-0 before:bg-accent before:z-0 overflow-hidden">
-        <SuccessCaseSection className="container pt-12 pb-6 md-down:text-center" />
-      </section>
+      <LazySection>
+        <section className="container relative before:content-[''] before:absolute before:w-[calc(100%-2rem)] before:h-full before:top-0 before:bg-accent before:z-0 overflow-hidden">
+          <SuccessCaseSection className="container pt-12 pb-6 md-down:text-center" />
+        </section>
+      </LazySection>
 
-      <section className="container pt-12 pb-6 md-down:text-center">
-        {sections.slice(2).map((section, index) => (
-          <SolutionSection key={index + 2} {...section} showDivider={index < sections.slice(2).length - 1} />
-        ))}
-      </section>
+      <LazySection>
+        <section className="container pt-12 pb-6 md-down:text-center">
+          {sections.slice(2).map((section, index) => (
+            <SolutionSection key={index + 2} {...section} showDivider={index < sections.slice(2).length - 1} />
+          ))}
+        </section>
+      </LazySection>
 
-      <section className="container pb-12">
-        <CTASection title="Would you like to get acquainted with Nation Business Suite without obligation?" />
-      </section>
+      <LazySection>
+        <section className="container pb-12">
+          <CTASection title="Would you like to get acquainted with Nation Business Suite without obligation?" />
+        </section>
+      </LazySection>
     </>
   );
 }

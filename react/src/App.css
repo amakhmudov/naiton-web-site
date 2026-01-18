@@ -45,11 +45,7 @@
 
 @font-face {
   font-family: "Daxlinecyrtf";
-  src:
-    url("./assets/fonts/DaxlineCyrTF-Light.eot") format("embedded-opentype"),
-    url("./assets/fonts/DaxlineCyrTF-Light.woff") format("woff"),
-    url("./assets/fonts/DaxlineCyrTF-Light.ttf") format("truetype"),
-    url("./assets/fonts/DaxlineCyrTF-Light.svg") format("svg");
+  src: url("./assets/fonts/DaxlineCyrTF-Light.woff") format("woff");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -57,11 +53,7 @@
 
 @font-face {
   font-family: "Daxlinecyrtf";
-  src:
-    url("./assets/fonts/DaxlineCyrTF-Thin.eot") format("embedded-opentype"),
-    url("./assets/fonts/DaxlineCyrTF-Thin.woff") format("woff"),
-    url("./assets/fonts/DaxlineCyrTF-Thin.ttf") format("truetype"),
-    url("./assets/fonts/DaxlineCyrTF-Thin.svg") format("svg");
+  src: url("./assets/fonts/DaxlineCyrTF-Thin.woff") format("woff");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -69,11 +61,7 @@
 
 @font-face {
   font-family: "Daxlinecyrtf";
-  src:
-    url("./assets/fonts/DaxlineCyrTF-Regular.eot") format("embedded-opentype"),
-    url("./assets/fonts/DaxlineCyrTF-Regular.woff") format("woff"),
-    url("./assets/fonts/DaxlineCyrTF-Regular.ttf") format("truetype"),
-    url("./assets/fonts/DaxlineCyrTF-Regular.svg") format("svg");
+  src: url("./assets/fonts/DaxlineCyrTF-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -81,11 +69,7 @@
 
 @font-face {
   font-family: "Daxlinecyrtf";
-  src:
-    url("./assets/fonts/DaxlineCyrTF-Bold.eot") format("embedded-opentype"),
-    url("./assets/fonts/DaxlineCyrTF-Bold.woff") format("woff"),
-    url("./assets/fonts/DaxlineCyrTF-Bold.ttf") format("truetype"),
-    url("./assets/fonts/DaxlineCyrTF-Bold.svg") format("svg");
+  src: url("./assets/fonts/DaxlineCyrTF-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -178,8 +162,32 @@
   }
 }
 
+/* Prevent layout shifts */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* swiper carousel starts */
 .swiper-container,
 .swiper-slide {
   @apply !h-auto;
+}
+
+.swiper-slide img {
+  aspect-ratio: 1440 / 600;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.swiper-slide-active img,
+.swiper-slide-visible img {
+  opacity: 1;
+}
+
+@media (max-width: 560px) {
+  .swiper-slide img {
+    aspect-ratio: 560 / 600;
+  }
 }
