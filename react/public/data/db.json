@@ -4,6 +4,10 @@
     { "id": 2, "label": "Solutions", "href": "/solutions/" },
     { "id": 3, "label": "Contact", "href": "/contact/" }
   ],
+  "contact": {
+    "phone": "+31208932732",
+    "phoneDisplay": "020\u00a0893\u00a02732"
+  },
   "projects": [
     {
       "id": "gps-buddy",
