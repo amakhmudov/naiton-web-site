@@ -128,6 +128,12 @@ img {
   height: auto;
 }
 
+/* Hide non-first slides before Swiper JS initialises — prevents layout shift
+   from all slides stacking vertically on first paint. */
+.projects-swiper:not(.swiper-initialized) .swiper-slide:not(:first-child) {
+  display: none;
+}
+
 .swiper-container,
 .swiper-slide {
   @apply !h-auto;
